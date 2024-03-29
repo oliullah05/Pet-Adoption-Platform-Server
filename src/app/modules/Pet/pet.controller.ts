@@ -2,6 +2,8 @@ import httpStatus from "http-status";
 import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
 import { PetServices } from "./pet.service";
+import pick from "../../shared/pick";
+import { petFilterableFields } from "./pet.const";
 
 
 const createPet = catchAsync(async (req, res) => {
@@ -18,22 +20,22 @@ const createPet = catchAsync(async (req, res) => {
 })
 
 
-// const getAllUser = catchAsync(async (req, res) => {
+const getAllPets = catchAsync(async (req, res) => {
 
-//     const filters = pick(req.query, userFilterableFields);
-//     const options = pick(req.query, ['page', "limit", "sortBy", "sortOrder"]);
-//     const result = await UserServices.getAllUser(filters, options);
-//     sendResponse(res, {
-//         success: true,
-//         message: "Users are retrieve successfully",
-//         statusCode: httpStatus.OK,
-//         meta: result.meta,
-//         data: result.data
-//     })
+    const filters = pick(req.query, petFilterableFields);
+    const options = pick(req.query, ['page', "limit", "sortBy", "sortOrder"]);
+    const result = await PetServices.getAllPet(filters, options);
+    sendResponse(res, {
+        success: true,
+        message: "Pets retrieved successfully",
+        statusCode: httpStatus.OK,
+        meta: result.meta,
+        data: result.data
+    })
 
-// })
+})
 
 export const PetControllers = {
-    // getAllUser,
+    getAllPets,
     createPet
 }
