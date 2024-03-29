@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 import { userSearchableFields } from "./user.const";
 import { paginationHelper } from "../../helpers/paginationHelpers";
 import { IPaginationOptions } from "../../interface/pagination";
@@ -8,6 +8,14 @@ import prisma from "../../shared/prisma";
 
 
 
+
+const createUser = async(payload:User)=>{
+    const result = await prisma.user.create({
+        data:payload
+    })
+
+    return result
+}
 
 
 
@@ -44,7 +52,7 @@ const getAllUser = async (params:any, options:IPaginationOptions) => {
     }
 
 
-console.log(andConditions);
+
     const whereConditions: Prisma.UserWhereInput = { AND: andConditions }
     // console.dir(andConditions,{depth:"infinity"});
     const result = await prisma.user.findMany({
@@ -82,5 +90,6 @@ console.log(andConditions);
 
 
 export const UserServices = {
-    getAllUser
+    getAllUser,
+    createUser
 }
