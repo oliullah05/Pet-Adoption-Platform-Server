@@ -3,7 +3,7 @@ import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
 import { PetServices } from "./pet.service";
 import pick from "../../shared/pick";
-import { petFilterableFields } from "./pet.const";
+import { petFilterableFields, petUpdateableFields } from "./pet.const";
 
 
 const createPet = catchAsync(async (req, res) => {
@@ -34,8 +34,24 @@ const getAllPets = catchAsync(async (req, res) => {
     })
 
 })
+const updateSinglePet = catchAsync(async (req, res) => {
+
+    const id = req.params.id;
+    const data = pick(req.body, petUpdateableFields);
+    const result = await PetServices.updateSinglePet(id, data);
+    sendResponse(res, {
+        success: true,
+        message: "Pet profile updated successfully",
+        statusCode: httpStatus.OK,
+        data: result
+    })
+
+})
+
+
 
 export const PetControllers = {
     getAllPets,
-    createPet
+    createPet,
+    updateSinglePet
 }

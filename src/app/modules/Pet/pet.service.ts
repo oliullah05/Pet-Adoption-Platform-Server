@@ -80,10 +80,21 @@ const getAllPet = async (params:any, options:IPaginationOptions) => {
     }
 }
 
+const updateSinglePet = async(id:string,data:Partial<Pet>)=>{
+const result = await prisma.pet.update({
+    where:{
+        id
+    },
+    data:data
+})
+return result
+}
 
 
 
 export const PetServices = {
     getAllPet,
-    createPet
+    createPet,
+    updateSinglePet
+
 }

@@ -13,6 +13,7 @@ const router = express.Router();
 
 router.post("/",auth(), validateRequest(PetValidations.createPet), PetControllers.createPet);
 router.get("/",auth(), PetControllers.getAllPets);
+router.put("/:id",auth(),validateRequest(PetValidations.updatePet), PetControllers.updateSinglePet);
 
 
 
