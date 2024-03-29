@@ -3,15 +3,28 @@ import { userSearchableFields } from "./user.const";
 import { paginationHelper } from "../../helpers/paginationHelpers";
 import { IPaginationOptions } from "../../interface/pagination";
 import prisma from "../../shared/prisma";
-
+import bcrypt from "bcrypt"
 
 
 
 
 
 const createUser = async(payload:User)=>{
+    const hashedPassword = await bcrypt.hash(payload.password, 12);
+    const userData = {
+        name :payload.name,
+        email: payload.email,
+        password: hashedPassword,
+    }
     const result = await prisma.user.create({
-        data:payload
+        data:userData, 
+        select:{
+            id:true,
+            name:true,
+            email:true,
+            createdAt:true,
+            updatedAt:true
+        }
     })
 
     return result
