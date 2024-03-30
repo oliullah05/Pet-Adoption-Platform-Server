@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import { Server } from "https"
 const app_1 = __importDefault(require("./app"));
 const config_1 = __importDefault(require("./app/config"));
-const port = config_1.default.port;
+const port = config_1.default.port || 3000;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         app_1.default.listen(port, () => {

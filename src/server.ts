@@ -1,7 +1,7 @@
 // import { Server } from "https"
 import app from "./app"
 import config from "./app/config";
-const port = config.port;
+const port = config.port || 3000;
 
 
 async function main() {
