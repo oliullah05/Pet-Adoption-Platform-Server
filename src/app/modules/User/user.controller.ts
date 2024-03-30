@@ -8,7 +8,7 @@ import { UserServices } from "./user.service";
 
 const createUser = catchAsync(async (req, res) => {
 
-   const userData = req.body;
+    const userData = req.body;
     const result = await UserServices.createUser(userData);
     sendResponse(res, {
         success: true,
@@ -35,7 +35,27 @@ const getAllUser = catchAsync(async (req, res) => {
 
 })
 
+
+const getMe = catchAsync(async (req, res) => {
+    const email = req.user.email;
+    const result = await UserServices.getMe(email);
+    sendResponse(res, {
+        success: true,
+        message: "User profile retrieved successfully",
+        statusCode: httpStatus.OK,
+        data: result
+    })
+
+})
+
+
+
+
+
+
+
 export const UserControllers = {
     getAllUser,
-    createUser
+    createUser,
+    getMe
 }
