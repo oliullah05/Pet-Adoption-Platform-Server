@@ -31,7 +31,6 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
             issues: simplifiedError?.errorSources
         }
 
-
         errorDetails.issues.map((issu:any) => {
             // console.log({message :issu.message});
             message = message+issu.message+". "

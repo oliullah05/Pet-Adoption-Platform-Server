@@ -4,12 +4,28 @@ import { paginationHelper } from "../../helpers/paginationHelpers";
 import { IPaginationOptions } from "../../interface/pagination";
 import prisma from "../../shared/prisma";
 import bcrypt from "bcrypt"
+import ApiError from "../../errors/ApiError";
+import httpStatus from "http-status";
 
 
 
 
 
 const createUser = async(payload:User)=>{
+
+
+const isUserExits = await prisma.user.findUnique({
+    where:{
+        email:payload.email
+    }
+})
+
+if(isUserExits){
+    throw new ApiError(httpStatus.BAD_REQUEST,"User alrady registered")
+}
+
+
+
     const hashedPassword = await bcrypt.hash(payload.password, 12);
     const userData = {
         name :payload.name,
