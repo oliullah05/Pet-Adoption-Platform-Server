@@ -2,6 +2,8 @@ import httpStatus from "http-status";
 import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
 import { AdoptionRequestServices } from "./adoptionRequest.service";
+import pick from "../../shared/pick";
+import { adoptionRequestsUpdateableFields } from "./adoptionRequest.const";
 
 const createAdoptionRequest = catchAsync(async(req,res)=>{
 const data = req.body;
@@ -34,7 +36,19 @@ sendResponse(res, {
 
 
 
+const updateAdoptionRequests = catchAsync(async (req, res) => {
 
+    const id = req.params.id;
+    const data = pick(req.body, adoptionRequestsUpdateableFields);
+    const result = await AdoptionRequestServices.updateAdoptionRequests(id, data);
+    sendResponse(res, {
+        success: true,
+        message: "Adoption request updated successfully",
+        statusCode: httpStatus.OK,
+        data: result
+    })
+
+})
 
 
 
@@ -44,5 +58,6 @@ sendResponse(res, {
 
 export const AdoptionRequestControllers = {
     createAdoptionRequest,
-    getAllAdoptionRequests
+    getAllAdoptionRequests,
+    updateAdoptionRequests
 }

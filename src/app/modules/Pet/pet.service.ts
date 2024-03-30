@@ -81,6 +81,13 @@ const getAllPet = async (params:any, options:IPaginationOptions) => {
 }
 
 const updateSinglePet = async(id:string,data:Partial<Pet>)=>{
+
+    await prisma.pet.findUniqueOrThrow({
+        where:{
+            id
+        }
+    })
+
 const result = await prisma.pet.update({
     where:{
         id

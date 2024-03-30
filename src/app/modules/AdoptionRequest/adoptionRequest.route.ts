@@ -17,4 +17,10 @@ auth(),
 AdoptionRequestControllers.getAllAdoptionRequests
 )
 
+router.put("/:id",
+auth(),
+validateRequest(AdoptionRequestValidations.updateAdoptionRequest),
+AdoptionRequestControllers.updateAdoptionRequests
+)
+
 export const AdoptionRequestRoutes = router;

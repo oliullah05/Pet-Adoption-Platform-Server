@@ -29,9 +29,26 @@ const getAllAdoptionRequests = async()=>{
     return result
 }
 
+const updateAdoptionRequests = async(id:string,data:Partial<AdoptionRequest>)=>{
 
+await prisma.adoptionRequest.findUniqueOrThrow({
+    where:{
+        id
+    }
+})
+
+    const result = await prisma.adoptionRequest.update({
+        where:{
+            id
+        },
+        data:data
+    })
+    return result
+    }
+    
 
 export const AdoptionRequestServices = {
     createAdoptionRequest,
-    getAllAdoptionRequests
+    getAllAdoptionRequests,
+    updateAdoptionRequests
 }
