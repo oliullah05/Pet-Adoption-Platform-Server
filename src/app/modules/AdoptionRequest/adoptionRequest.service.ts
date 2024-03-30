@@ -24,6 +24,14 @@ await prisma.pet.findUniqueOrThrow({
 }
 
 
+const getAllAdoptionRequests = async()=>{
+    const result = await prisma.adoptionRequest.findMany()
+    return result
+}
+
+
+
 export const AdoptionRequestServices = {
-    createAdoptionRequest
+    createAdoptionRequest,
+    getAllAdoptionRequests
 }

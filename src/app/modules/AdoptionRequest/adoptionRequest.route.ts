@@ -12,5 +12,9 @@ auth(),
 validateRequest(AdoptionRequestValidations.createAdoptionRequest),
 AdoptionRequestControllers.createAdoptionRequest
 )
+router.get("/",
+auth(),
+AdoptionRequestControllers.getAllAdoptionRequests
+)
 
 export const AdoptionRequestRoutes = router;

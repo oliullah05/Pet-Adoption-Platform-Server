@@ -19,6 +19,18 @@ sendResponse(res, {
 })
 
 
+const getAllAdoptionRequests = catchAsync(async(req,res)=>{
+const result = await AdoptionRequestServices.getAllAdoptionRequests()
+sendResponse(res, {
+    statusCode: httpStatus.OK,
+    message: "Adoption requests retrieved successfully",
+    success: true,
+    data: result
+})
+
+})
+
+
 
 
 
@@ -31,5 +43,6 @@ sendResponse(res, {
 
 
 export const AdoptionRequestControllers = {
-    createAdoptionRequest
+    createAdoptionRequest,
+    getAllAdoptionRequests
 }
