@@ -4,12 +4,12 @@ This repository contains the source code for a comprehensive Shoes Management Da
 
 ## Live Link
 
-You can use server site here [Pet-Adoption-Platform-Server](https://shiny-yeot-6fe786.netlify.app/)
+You can use the server site here [Pet-Adoption-Platform-Server](https://pet-adoption-topaz.vercel.app/)
 
 
 ## Tech Stack
 
-**Server:** Node , Express, TypeScript, Prisma-orm, PostgreSQL, JWT
+**Server:** Node, Express, TypeScript, Prisma-orm, PostgreSQL, JWT
 
 
 ## Features
@@ -24,12 +24,12 @@ You can use server site here [Pet-Adoption-Platform-Server](https://shiny-yeot-6
 - User can update his pet
 
 ### Adoption-request
-- User can requiest other's pet for adoption.
+- User can request another's pet for adoption.
 
 
 ### Pet Filtering
-- Comprehensive shoe filtering options, including species, location, size, age, breed and additional parameters.
-- And search by  location, breed, species in searchTerm query.
+- Comprehensive shoe filtering options, including species, location, size, age, breed, and additional parameters.
+- And search by  location, breed, and species in searchTerm query.
 
 
 
