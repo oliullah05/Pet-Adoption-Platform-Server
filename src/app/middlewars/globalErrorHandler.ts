@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express"
 import httpStatus from "http-status"
 import { TErrorSources } from "../interface/error";
-import { ZodError } from "zod";
+import { ZodError, any } from "zod";
 import handleZodError from "../errors/handleZodError";
 import config from "../config";
 import ApiError from "../errors/ApiError";
@@ -14,52 +14,60 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
     // })
 
     let statusCode = 500;
-    let message = 'Something went wrong!';
-    let errorDetails: TErrorSources  = [
-      {
-        path: '',
-        message: 'Something went wrong',
-      },
+    let message = err.message || 'Something went wrong!'
+    let errorDetails: TErrorSources = [
+        {
+            field: '',
+            message:""
+        },
     ];
 
     if (err instanceof ZodError) {
+        
         const simplifiedError = handleZodError(err);
         statusCode = simplifiedError?.statusCode;
-        message = simplifiedError?.message;
+        message = ''
         errorDetails = {
-            issues:simplifiedError?.errorSources
+            issues: simplifiedError?.errorSources
         }
-      }
 
 
-      else if (err instanceof ApiError) {
+        errorDetails.issues.map((issu:any) => {
+            // console.log({message :issu.message});
+            message = message+issu.message+". "
+        });
+
+    }
+
+
+    else if (err instanceof ApiError) {
         statusCode = err?.statusCode;
         message = err.message;
         errorDetails = [
-          {
-            path: '',
-            message: err?.message,
-          },
+            {
+                field: '',
+                message: err?.message,
+            },
         ];
-      } else if (err instanceof Error) {
+    } else if (err instanceof Error) {
         message = err.message;
         errorDetails = [
-          {
-            path: '',
-            message: err?.message,
-          },
+            {
+                field: '',
+                message: err?.message,
+            },
         ];
-      }
-    
-      //ultimate return
-      return res.status(statusCode).json({
+    }
+
+    //ultimate return
+    return res.status(statusCode).json({
         success: false,
         message,
-       errorDetails,
+        errorDetails,
         // error:err,
         // stack: config.node_env === 'development' ? err?.stack : null,
-      });
-    };
+    });
+};
 
 
 export default globalErrorHandler;
