@@ -3,8 +3,8 @@ import httpStatus from "http-status"
 import { TErrorSources } from "../interface/error";
 import { ZodError, any } from "zod";
 import handleZodError from "../errors/handleZodError";
-import config from "../config";
 import ApiError from "../errors/ApiError";
+import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 
 const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
     // res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
@@ -13,14 +13,14 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
     //     error:err
     // })
 
-    let statusCode = 500;
+    let statusCode =  500;
     let message = err.message || 'Something went wrong!'
     let errorDetails: TErrorSources = [
         {
             field: '',
             message:""
         },
-    ];
+    ] ;
 
     if (err instanceof ZodError) {
         
@@ -49,15 +49,22 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
                 message: err?.message,
             },
         ];
-    } else if (err instanceof Error) {
-        message = err.message;
-        errorDetails = [
-            {
-                field: '',
-                message: err?.message,
-            },
-        ];
-    }
+    }  else if (
+        err instanceof JsonWebTokenError ||
+        err instanceof TokenExpiredError  
+      ) {
+        statusCode=401
+        message = 'Unauthorized Access'
+        errorDetails = err
+      }
+    
+      // for Error
+      else if (err instanceof Error) {
+        message = err.message || "Something Went Wrong"
+        errorDetails = err 
+      }
+    
+   
 
     //ultimate return
     return res.status(statusCode).json({

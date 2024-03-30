@@ -21,7 +21,7 @@ const createPet = async(payload:Pet)=>{
 
 
 const getAllPet = async (params:any, options:IPaginationOptions) => {
- 
+
     const { searchTerm, ...filterData } = params;
  
     const { limit, page, sortBy, sortOrder, skip } = paginationHelper.calculatePagination(options)

@@ -5,13 +5,12 @@ import config from "../config";
 import { jwtHelpers } from "../helpers/jwtHelpers";
 
 
-
 const auth = (...roles: string[]) => {
     return async (req: Request & {user?:any}, res: Response, next: NextFunction) => {
         try {
             const accessToken = req.headers.authorization
            if(!accessToken){
-            throw new ApiError(httpStatus.UNAUTHORIZED,"you are not authorized")
+            throw new ApiError(httpStatus.UNAUTHORIZED,"Unauthorized Access")
            }
            const verifyUser =await jwtHelpers.verifyToken(accessToken,config.jwt.jwt_access_secret as string);
            req.user= verifyUser
