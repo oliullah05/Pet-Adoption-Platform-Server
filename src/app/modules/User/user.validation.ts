@@ -7,7 +7,14 @@ const createUser = z.object({
         email:z.string({required_error:"Email is required"}),
     })
 })
+const updateMe = z.object({
+    body:z.object({
+        name:z.string().optional(),
+        email:z.string().optional(),
+    })
+})
 
 export const UserValidations = {
-    createUser
+    createUser,
+    updateMe
 }
